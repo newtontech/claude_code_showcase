@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Code - AI驱动的开发革命</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Orbitron:wght@400;700;900&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-bg: #080808;
+            --color-primary: #ff4800;
+            --color-secondary: #00f0ff;
+            --color-accent: #ff00ff;
+            --color-text: #f0f0f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--color-bg);
+            color: var(--color-text);
+            overflow-x: hidden;
+        }
+
+        .font-display {
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .font-code {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* 噪点纹理 */
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)'/%3E%3C/svg%3E");
+        }
+
+        /* 网格背景 */
+        .grid-bg {
+            background-image:
+                linear-gradient(rgba(255, 72, 0, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 72, 0, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        /* 渐变文字 */
+        .gradient-text {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary), var(--color-accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* 发光效果 */
+        .glow {
+            text-shadow: 0 0 40px var(--color-primary), 0 0 80px var(--color-secondary);
+        }
+
+        /* 卡片悬停 */
+        .feature-card {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: 0 20px 40px rgba(255, 72, 0, 0.3), 0 0 60px rgba(0, 240, 255, 0.1);
+        }
+
+        /* 打字动画 */
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        @keyframes blink {
+            50% { border-color: transparent }
+        }
+
+        .typing-effect {
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 3px solid var(--color-primary);
+            animation: typing 3s steps(40) forwards, blink 0.7s step-end infinite;
+        }
+
+        /* 滚动触发动画 */
+        .reveal {
+            opacity: 0;
+            transform: translateY(60px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 浮动动画 */
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(3deg); }
+        }
+
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* 跑马灯 */
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .marquee-content {
+            animation: marquee 20s linear infinite;
+        }
+
+        /* 进度条动画 */
+        @keyframes progress {
+            0% { width: 0; }
+        }
+
+        .progress-animate {
+            animation: progress 2s ease-out forwards;
+        }
+
+        /* 计数动画 */
+        .counter {
+            transition: all 0.3s ease;
+        }
+
+        /* 垂直文字 */
+        .vertical-text {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+        }
+
+        /* 边框发光 */
+        .border-glow {
+            position: relative;
+        }
+
+        .border-glow::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(45deg, var(--color-primary), var(--color-secondary), var(--color-accent));
+            border-radius: inherit;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .border-glow:hover::before {
+            opacity: 1;
+        }
+
+        /* 不对称布局 */
+        .asymmetric-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1.5fr;
+            gap: 2rem;
+        }
+
+        /* 导航栏模糊 */
+        .nav-blur {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        /* 按钮样式 */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        /* 代码块样式 */
+        .code-block {
+            background: linear-gradient(135deg, rgba(255, 72, 0, 0.1), rgba(0, 240, 255, 0.1));
+            border: 1px solid rgba(255, 72, 0, 0.3);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .code-header {
+            background: rgba(255, 72, 0, 0.2);
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid rgba(255, 72, 0, 0.3);
+        }
+
+        /* 统计数字样式 */
+        .stat-number {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            line-height: 1;
+        }
+
+        /* 滚动指示器 */
+        @keyframes scrollBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(10px); }
+        }
+
+        .scroll-indicator {
+            animation: scrollBounce 2s ease-in-out infinite;
+        }
+
+        /* 玻璃态效果 */
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* 响应式 */
+        @media (max-width: 1024px) {
+            .asymmetric-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 选中效果 */
+        ::selection {
+            background: var(--color-primary);
+            color: white;
+        }
+    </style>
+</head>
+<body class="grid-bg">
+    <!-- 噪点覆盖层 -->
+    <div class="noise-overlay"></div>
+
+    <!-- 导航栏 -->
+    <nav class="fixed top-0 left-0 right-0 z-50 nav-blur bg-black/50 border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="font-display font-bold text-2xl gradient-text">CLAUDE CODE</div>
+            <div class="hidden md:flex gap-8 text-sm font-semibold tracking-wider">
+                <a href="#code" class="hover:text-[var(--color-primary)] transition-colors">代码生成</a>
+                <a href="#design" class="hover:text-[var(--color-secondary)] transition-colors">设计创新</a>
+                <a href="#fullstack" class="hover:text-[var(--color-accent)] transition-colors">全栈开发</a>
+                <a href="#collaboration" class="hover:text-[var(--color-primary)] transition-colors">多域协作</a>
+            </div>
+            <button class="btn-primary px-6 py-2 rounded-full font-bold text-sm">
+                立即开始
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero 区域 -->
+    <section class="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
+        <!-- 背景装饰 -->
+        <div class="absolute top-20 right-10 w-96 h-96 bg-[var(--color-primary)] rounded-full blur-3xl opacity-20 floating"></div>
+        <div class="absolute bottom-20 left-10 w-80 h-80 bg-[var(--color-secondary)] rounded-full blur-3xl opacity-20 floating" style="animation-delay: -3s;"></div>
+
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-8">
+                    <div class="inline-block glass px-4 py-2 rounded-full text-sm font-code">
+                        <span class="text-[var(--color-primary)]">◆</span> AI驱动的开发革命
+                    </div>
+                    <h1 class="font-display font-black leading-none">
+                        <span class="block text-6xl md:text-8xl">让代码</span>
+                        <span class="block text-6xl md:text-8xl gradient-text glow">自己写</span>
+                        <span class="block text-4xl md:text-6xl mt-4 text-white/60">自己改</span>
+                    </h1>
+                    <p class="text-xl md:text-2xl text-white/70 max-w-xl leading-relaxed">
+                        Claude Code 重新定义软件开发流程。
+                        <br><span class="text-[var(--color-secondary)]">10倍效率提升。</span>
+                        <br><span class="text-[var(--color-primary)]">100%质量保证。</span>
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <button class="btn-primary px-8 py-4 rounded-full font-bold text-lg">
+                            开始体验 →
+                        </button>
+                        <button class="glass px-8 py-4 rounded-full font-bold text-lg hover:bg-white/10 transition-colors">
+                            查看文档
+                        </button>
+                    </div>
+                </div>
+
+                <div class="relative">
+                    <div class="code-block floating">
+                        <div class="code-header flex items-center gap-2">
+                            <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                            <span class="ml-4 font-code text-sm text-white/50">demo.tsx</span>
+                        </div>
+                        <pre class="p-6 font-code text-sm overflow-x-auto"><code class="typing-effect"><span class="text-purple-400">import</span> <span class="text-blue-400">{</span> <span class="text-green-400">Claude</span> <span class="text-blue-400">}</span> <span class="text-purple-400">from</span> <span class="text-yellow-400">'@anthropic/ai'</span>
+
+<span class="text-purple-400">const</span> <span class="text-blue-400">assistant</span> <span class="text-white">=</span> <span class="text-purple-400">new</span> <span class="text-green-400">Claude</span><span class="text-blue-400">()</span>
+
+<span class="text-white/50">// 让 Claude 创建一个完整的组件</span>
+<span class="text-purple-400">await</span> <span class="text-blue-400">assistant</span><span class="text-white">.</span><span class="text-yellow-400">generate</span><span class="text-blue-400">(</span><span class="text-yellow-400">`创建一个带有动画的用户仪表板`</span><span class="text-blue-400">)</span>
+
+<span class="text-green-400">// ✨ 实时生成生产级代码</span>
+<span class="text-green-400">// 🎨 自动应用最佳实践</span>
+<span class="text-green-400">// ⚡️ 包含测试和文档</span></code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 滚动指示器 -->
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 scroll-indicator">
+            <div class="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center pt-2">
+                <div class="w-1 h-3 bg-white/50 rounded-full"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 跑马灯横幅 -->
+    <section class="py-8 bg-[var(--color-primary)] overflow-hidden">
+        <div class="marquee-content whitespace-nowrap">
+            <span class="inline-block px-8 font-display font-bold text-lg text-black">
+                AI驱动开发 ★ 实时代码生成 ★ 智能重构 ★ 自动测试 ★ 多语言支持 ★ 端到端解决方案
+                ★ AI驱动开发 ★ 实时代码生成 ★ 智能重构 ★ 自动测试 ★ 多语言支持 ★ 端到端解决方案
+            </span>
+        </div>
+    </section>
+
+    <!-- 代码生成能力 -->
+    <section id="code" class="py-32 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="reveal">
+                <div class="flex items-end gap-4 mb-16">
+                    <span class="vertical-text font-display font-bold text-8xl text-white/5 absolute right-10">CODE</span>
+                    <h2 class="font-display font-black text-5xl md:text-7xl">
+                        <span class="text-white/20">01.</span>
+                        <span class="gradient-text">代码生成</span>
+                    </h2>
+                </div>
+            </div>
+
+            <div class="asymmetric-grid gap-8">
+                <div class="feature-card glass rounded-2xl p-8 reveal">
+                    <div class="text-5xl mb-6">⚡️</div>
+                    <h3 class="font-display font-bold text-2xl mb-4">毫秒级响应</h3>
+                    <p class="text-white/60 leading-relaxed">从需求到代码，仅需数秒。Claude 理解上下文，生成符合项目规范的完整实现。</p>
+                    <div class="mt-6 pt-6 border-t border-white/10">
+                        <div class="flex justify-between text-sm mb-2">
+                            <span>生成速度</span>
+                            <span class="text-[var(--color-primary)]">100x 更快</span>
+                        </div>
+                        <div class="h-2 bg-white/10 rounded-full overflow-hidden">
+                            <div class="h-full bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] progress-animate" style="width: 95%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="feature-card glass rounded-2xl p-8 lg:col-span-2 reveal" style="transition-delay: 0.1s;">
+                    <div class="text-5xl mb-6">🎯</div>
+                    <h3 class="font-display font-bold text-2xl mb-4">精准理解意图</h3>
+                    <p class="text-white/60 leading-relaxed mb-6">不是简单的代码补全，而是深度理解你的需求。Claude 分析上下文、依赖关系、最佳实践，生成可维护的高质量代码。</p>
+                    <div class="grid md:grid-cols-3 gap-4">
+                        <div class="bg-white/5 rounded-lg p-4 text-center">
+                            <div class="text-3xl font-display font-bold text-[var(--color-secondary)] counter" data-target="98">0</div>
+                            <div class="text-sm text-white/50 mt-2">% 准确率</div>
+                        </div>
+                        <div class="bg-white/5 rounded-lg p-4 text-center">
+                            <div class="text-3xl font-display font-bold text-[var(--color-primary)] counter" data-target="500">0</div>
+                            <div class="text-sm text-white/50 mt-2">+ 语言支持</div>
+                        </div>
+                        <div class="bg-white/5 rounded-lg p-4 text-center">
+                            <div class="text-3xl font-display font-bold text-[var(--color-accent)] counter" data-target="0">0</div>
+                            <div class="text-sm text-white/50 mt-2">% 人工修改</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="feature-card glass rounded-2xl p-8 lg:col-span-3 reveal" style="transition-delay: 0.2s;">
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <h4 class="font-display font-bold text-xl mb-4 text-[var(--color-secondary)]">你的输入</h4>
+                            <div class="bg-black/50 rounded-lg p-4 font-code text-sm text-white/70">
+                                "创建一个用户认证系统，包含登录、注册、密码重置功能，使用 JWT 和 bcrypt"
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-display font-bold text-xl mb-4 text-[var(--color-primary)]">Claude 输出</h4>
+                            <div class="bg-black/50 rounded-lg p-4 font-code text-xs overflow-x-auto">
+                                <code class="text-green-400">// ✅ 完整的 AuthController</code><br>
+                                <code class="text-green-400">// ✅ JWT 中间件</code><br>
+                                <code class="text-green-400">// ✅ 密码加密服务</code><br>
+                                <code class="text-green-400">// ✅ 单元测试覆盖</code><br>
+                                <code class="text-green-400">// ✅ API 文档</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 设计创新能力 -->
+    <section id="design" class="py-32 bg-gradient-to-b from-transparent via-[rgba(255,72,0,0.05)] to-transparent">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="reveal">
+                <div class="flex items-end gap-4 mb-16">
+                    <span class="vertical-text font-display font-bold text-8xl text-white/5 absolute right-10">DESIGN</span>
+                    <h2 class="font-display font-black text-5xl md:text-7xl">
+                        <span class="text-white/20">02.</span>
+                        <span class="gradient-text">设计创新</span>
+                    </h2>
+                </div>
+            </div>
+
+            <div class="grid lg:grid-cols-3 gap-8">
+                <div class="feature-card glass rounded-2xl p-8 reveal">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] flex items-center justify-center text-3xl mb-6">
+                        🎨
+                    </div>
+                    <h3 class="font-display font-bold text-2xl mb-4">独特视觉语言</h3>
+                    <p class="text-white/60 leading-relaxed">拒绝千篇一律的模板。Claude 创建具有鲜明个性的设计，每个项目都是独特的艺术作品。</p>
+                    <ul class="mt-6 space-y-3 text-sm">
+                        <li class="flex items-center gap-3">
+                            <span class="w-2 h-2 rounded-full bg-[var(--color-primary)]"></span>
+                            <span>大胆的色彩方案</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="w-2 h-2 rounded-full bg-[var(--color-secondary)]"></span>
+                            <span>独特的字体组合</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="w-2 h-2 rounded-full bg-[var(--color-accent)]"></span>
+                            <span>创新的布局结构</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="feature-card glass rounded-2xl p-8 reveal" style="transition-delay: 0.1s;">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-[var(--color-secondary)] to-[var(--color-accent)] flex items-center justify-center text-3xl mb-6">
+                        ✨
+                    </div>
+                    <h3 class="font-display font-bold text-2xl mb-4">微交互动画</h3>
+                    <p class="text-white/60 leading-relaxed">让界面活起来。精心设计的动效引导用户注意力，提供即时反馈，创造愉悦体验。</p>
+                    <div class="mt-6 space-y-4">
+                        <div class="bg-white/5 rounded-lg p-4">
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm">悬停效果</span>
+                                <span class="text-[var(--color-secondary)] font-code text-xs">60fps</span>
+                            </div>
+                        </div>
+                        <div class="bg-white/5 rounded-lg p-4">
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm">滚动动画</span>
+                                <span class="text-[var(--color-primary)] font-code text-xs">GPU加速</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="feature-card glass rounded-2xl p-8 reveal" style="transition-delay: 0.2s;">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-[var(--color-accent)] to-[var(--color-primary)] flex items-center justify-center text-3xl mb-6">
+                        📱
+                    </div>
+                    <h3 class="font-display font-bold text-2xl mb-4">响应式完美</h3>
+                    <p class="text-white/60 leading-relaxed">在任何设备上完美呈现。从手机到 4K 显示器，设计自动适配，体验始终如一。</p>
+                    <div class="mt-6 flex gap-2">
+                        <div class="px-3 py-1 bg-white/10 rounded-full text-xs">📱 Mobile</div>
+                        <div class="px-3 py-1 bg-white/10 rounded-full text-xs">💻 Desktop</div>
+                        <div class="px-3 py-1 bg-white/10 rounded-full text-xs">🖥️ 4K</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 设计示例展示 -->
+            <div class="mt-16 reveal">
+                <div class="glass rounded-2xl p-8">
+                    <h4 class="font-display font-bold text-xl mb-6 text-center">设计风格示例</h4>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="aspect-square rounded-xl bg-gradient-to-br from-gray-900 to-gray-800 border border-white/10 p-4 flex items-center justify-center">
+                            <span class="font-display font-bold text-center text-sm">极简未来</span>
+                        </div>
+                        <div class="aspect-square rounded-xl bg-gradient-to-br from-orange-900 to-red-900 border border-orange-500/30 p-4 flex items-center justify-center">
+                            <span class="font-display font-bold text-center text-sm">复古工业</span>
+                        </div>
+                        <div class="aspect-square rounded-xl bg-gradient-to-br from-cyan-900 to-blue-900 border border-cyan-500/30 p-4 flex items-center justify-center">
+                            <span class="font-display font-bold text-center text-sm">数字海洋</span>
+                        </div>
+                        <div class="aspect-square rounded-xl bg-gradient-to-br from-pink-900 to-purple-900 border border-pink-500/30 p-4 flex items-center justify-center">
+                            <span class="font-display font-bold text-center text-sm">霓虹赛博</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 全栈开发 -->
+    <section id="fullstack" class="py-32 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="reveal">
+                <div class="flex items-end gap-4 mb-16">
+                    <span class="vertical-text font-display font-bold text-8xl text-white/5 absolute right-10">FULLSTACK</span>
+                    <h2 class="font-display font-black text-5xl md:text-7xl">
+                        <span class="text-white/20">03.</span>
+                        <span class="gradient-text">全栈开发</span>
+                    </h2>
+                </div>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-8">
+                    <div class="reveal">
+                        <p class="text-xl text-white/70 leading-relaxed mb-8">
+                            从前端到后端，从数据库到部署，Claude Code 涵盖完整的开发生命周期。
+                            <span class="text-[var(--color-primary)]">一个助手，全部搞定。</span>
+                        </p>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="feature-card glass rounded-xl p-6 reveal">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-xl bg-[var(--color-primary)]/20 flex items-center justify-center text-2xl">🎨</div>
+                                <div>
+                                    <h4 class="font-display font-bold text-lg">前端框架</h4>
+                                    <p class="text-sm text-white/50">React, Vue, Next.js, Svelte</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="feature-card glass rounded-xl p-6 reveal" style="transition-delay: 0.1s;">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-xl bg-[var(--color-secondary)]/20 flex items-center justify-center text-2xl">⚙️</div>
+                                <div>
+                                    <h4 class="font-display font-bold text-lg">后端服务</h4>
+                                    <p class="text-sm text-white/50">Node.js, Python, Go, Rust</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="feature-card glass rounded-xl p-6 reveal" style="transition-delay: 0.2s;">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-xl bg-[var(--color-accent)]/20 flex items-center justify-center text-2xl">🗄️</div>
+                                <div>
+                                    <h4 class="font-display font-bold text-lg">数据库</h4>
+                                    <p class="text-sm text-white/50">PostgreSQL, MongoDB, Redis</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="feature-card glass rounded-xl p-6 reveal" style="transition-delay: 0.3s;">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-xl bg-gradient-to-r from-[var(--color-primary)]/20 to-[var(--color-secondary)]/20 flex items-center justify-center text-2xl">🚀</div>
+                                <div>
+                                    <h4 class="font-display font-bold text-lg">部署运维</h4>
+                                    <p class="text-sm text-white/50">Docker, Kubernetes, CI/CD</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal">
+                    <div class="glass rounded-2xl p-8">
+                        <h4 class="font-display font-bold text-xl mb-8 text-center">技术栈覆盖</h4>
+                        <div class="grid grid-cols-3 gap-4">
+                            <div class="aspect-square rounded-xl bg-white/5 flex flex-col items-center justify-center p-4 hover:bg-white/10 transition-colors">
+                                <div class="text-3xl mb-2">⚛️</div>
+                                <span class="text-xs text-center">React</span>
+                            </div>
+                            <div class="aspect-square rounded-xl bg-white/5 flex flex-col items-center justify-center p-4 hover:bg-white/10 transition-colors">
+                                <div class="text-3xl mb-2">🟢</div>
+                                <span class="text-xs text-center">Vue</span>
+                            </div>
+                            <div class="aspect-square rounded-xl bg-white/5 flex flex-col items-center justify-center p-4 hover:bg-white/10 transition-colors">
+                                <div class="text-3xl mb-2">▲</div>
+                                <span class="text-xs text-center">Next.js</span>
+                            </div>
+                            <div class="aspect-square rounded-xl bg-white/5 flex flex-col items-center justify-center p-4 hover:bg-white/10 transition-colors">
+                                <div class="text-3xl mb-2">🟨</div>
+                                <span class="text-xs text-center">JavaScript</span>
+                            </div>
+                            <div class="aspect-square rounded-xl bg-white/5 flex flex-col items-center justify-center p-4 hover:bg-white/10 transition-colors">
+                                <div class="text-3xl mb-2">🐍</div>
+                                <span class="text-xs text-center">Python</span>
+                            </div>
+                            <div class="aspect-square rounded-xl bg-white/5 flex flex-col items-center justify-center p-4 hover:bg-white/10 transition-colors">
+                                <div class="text-3xl mb-2">🦀</div>
+                                <span class="text-xs text-center">Rust</span>
+                            </div>
+                            <div class="aspect-square rounded-xl bg-white/5 flex flex-col items-center justify-center p-4 hover:bg-white/10 transition-colors">
+                                <div class="text-3xl mb-2">🐘</div>
+                                <span class="text-xs text-center">PostgreSQL</span>
+                            </div>
+                            <div class="aspect-square rounded-xl bg-white/5 flex flex-col items-center justify-center p-4 hover:bg-white/10 transition-colors">
+                                <div class="text-3xl mb-2">🍃</div>
+                                <span class="text-xs text-center">MongoDB</span>
+                            </div>
+                            <div class="aspect-square rounded-xl bg-white/5 flex flex-col items-center justify-center p-4 hover:bg-white/10 transition-colors">
+                                <div class="text-3xl mb-2">🐳</div>
+                                <span class="text-xs text-center">Docker</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 多领域协作 -->
+    <section id="collaboration" class="py-32 bg-gradient-to-b from-transparent via-[rgba(0,240,255,0.05)] to-transparent">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="reveal">
+                <div class="flex items-end gap-4 mb-16">
+                    <span class="vertical-text font-display font-bold text-8xl text-white/5 absolute right-10">TEAM</span>
+                    <h2 class="font-display font-black text-5xl md:text-7xl">
+                        <span class="text-white/20">04.</span>
+                        <span class="gradient-text">多域协作</span>
+                    </h2>
+                </div>
+            </div>
+
+            <div class="text-center mb-16 reveal">
+                <p class="text-xl text-white/70 max-w-3xl mx-auto">
+                    Claude 不仅是编码助手，更是全能团队成员。从产品构思到部署上线，
+                    <span class="text-[var(--color-secondary)]">无缝衔接每个环节</span>。
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="feature-card glass rounded-2xl p-6 text-center reveal">
+                    <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-blue-500/20 to-blue-600/20 flex items-center justify-center text-4xl">
+                        💡
+                    </div>
+                    <h4 class="font-display font-bold text-lg mb-2">产品经理</h4>
+                    <p class="text-sm text-white/50">需求分析、功能规划、用户故事</p>
+                </div>
+
+                <div class="feature-card glass rounded-2xl p-6 text-center reveal" style="transition-delay: 0.1s;">
+                    <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-purple-500/20 to-purple-600/20 flex items-center justify-center text-4xl">
+                        🎨
+                    </div>
+                    <h4 class="font-display font-bold text-lg mb-2">设计师</h4>
+                    <p class="text-sm text-white/50">UI/UX设计、设计系统、原型</p>
+                </div>
+
+                <div class="feature-card glass rounded-2xl p-6 text-center reveal" style="transition-delay: 0.2s;">
+                    <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-[var(--color-primary)]/20 to-[var(--color-primary)]/30 flex items-center justify-center text-4xl">
+                        💻
+                    </div>
+                    <h4 class="font-display font-bold text-lg mb-2">工程师</h4>
+                    <p class="text-sm text-white/50">代码开发、测试、调试、重构</p>
+                </div>
+
+                <div class="feature-card glass rounded-2xl p-6 text-center reveal" style="transition-delay: 0.3s;">
+                    <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-green-500/20 to-green-600/20 flex items-center justify-center text-4xl">
+                        📊
+                    </div>
+                    <h4 class="font-display font-bold text-lg mb-2">数据分析师</h4>
+                    <p class="text-sm text-white/50">数据处理、可视化、洞察</p>
+                </div>
+            </div>
+
+            <!-- 协作流程 -->
+            <div class="mt-16 reveal">
+                <div class="glass rounded-2xl p-8">
+                    <h4 class="font-display font-bold text-xl mb-8 text-center">端到端工作流</h4>
+                    <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                        <div class="flex-1 text-center p-4">
+                            <div class="w-16 h-16 mx-auto mb-4 rounded-xl bg-blue-500/20 flex items-center justify-center text-2xl">📝</div>
+                            <h5 class="font-bold mb-2">需求定义</h5>
+                            <p class="text-xs text-white/50">理解业务目标</p>
+                        </div>
+                        <div class="text-[var(--color-primary)] text-2xl">→</div>
+                        <div class="flex-1 text-center p-4">
+                            <div class="w-16 h-16 mx-auto mb-4 rounded-xl bg-purple-500/20 flex items-center justify-center text-2xl">🎨</div>
+                            <h5 class="font-bold mb-2">设计原型</h5>
+                            <p class="text-xs text-white/50">创建视觉方案</p>
+                        </div>
+                        <div class="text-[var(--color-secondary)] text-2xl">→</div>
+                        <div class="flex-1 text-center p-4">
+                            <div class="w-16 h-16 mx-auto mb-4 rounded-xl bg-[var(--color-primary)]/20 flex items-center justify-center text-2xl">⚙️</div>
+                            <h5 class="font-bold mb-2">开发实现</h5>
+                            <p class="text-xs text-white/50">编写生产代码</p>
+                        </div>
+                        <div class="text-[var(--color-accent)] text-2xl">→</div>
+                        <div class="flex-1 text-center p-4">
+                            <div class="w-16 h-16 mx-auto mb-4 rounded-xl bg-green-500/20 flex items-center justify-center text-2xl">🚀</div>
+                            <h5 class="font-bold mb-2">测试部署</h5>
+                            <p class="text-xs text-white/50">上线监控优化</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 统计数据 -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="glass rounded-3xl p-12">
+                <div class="grid md:grid-cols-4 gap-8 text-center">
+                    <div class="reveal">
+                        <div class="stat-number font-display gradient-text" data-target="10">0</div>
+                        <div class="text-white/50 mt-2">倍效率提升</div>
+                    </div>
+                    <div class="reveal" style="transition-delay: 0.1s;">
+                        <div class="stat-number font-display gradient-text" data-target="100">0</div>
+                        <div class="text-white/50 mt-2">+ 编程语言</div>
+                    </div>
+                    <div class="reveal" style="transition-delay: 0.2s;">
+                        <div class="stat-number font-display gradient-text" data-target="99">0</div>
+                        <div class="text-white/50 mt-2">% 代码质量</div>
+                    </div>
+                    <div class="reveal" style="transition-delay: 0.3s;">
+                        <div class="stat-number font-display gradient-text" data-target="24">0</div>
+                        <div class="text-white/50 mt-2">/7 全天候</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-32 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-[var(--color-primary)]/10 via-transparent to-[var(--color-secondary)]/10"></div>
+        <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
+            <div class="reveal">
+                <h2 class="font-display font-black text-4xl md:text-6xl mb-8">
+                    <span class="gradient-text">准备好</span><br>
+                    <span class="text-white">革命你的</span><br>
+                    <span class="gradient-text">开发流程了吗？</span>
+                </h2>
+                <p class="text-xl text-white/70 mb-12 max-w-2xl mx-auto">
+                    加入数以万计的开发者，让 Claude Code 成为你的超级助手。
+                    <br>从今天开始，体验前所未有的开发效率。
+                </p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <button class="btn-primary px-12 py-5 rounded-full font-bold text-lg">
+                        免费开始使用 →
+                    </button>
+                    <button class="glass px-12 py-5 rounded-full font-bold text-lg hover:bg-white/10 transition-colors">
+                        预约演示
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="font-display font-bold text-xl gradient-text">CLAUDE CODE</div>
+                <div class="text-white/50 text-sm">
+                    © <span id="year"></span> Anthropic. 让开发更智能。
+                </div>
+                <div class="flex gap-6">
+                    <a href="#" class="text-white/50 hover:text-white transition-colors">文档</a>
+                    <a href="#" class="text-white/50 hover:text-white transition-colors">GitHub</a>
+                    <a href="#" class="text-white/50 hover:text-white transition-colors">Twitter</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 滚动触发动画
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // 计数动画
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const counter = entry.target;
+                    const target = parseInt(counter.getAttribute('data-target'));
+                    const duration = 2000;
+                    const step = target / (duration / 16);
+                    let current = 0;
+
+                    const updateCounter = () => {
+                        current += step;
+                        if (current < target) {
+                            counter.textContent = Math.floor(current);
+                            requestAnimationFrame(updateCounter);
+                        } else {
+                            counter.textContent = target;
+                        }
+                    };
+
+                    updateCounter();
+                    counterObserver.unobserve(counter);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('.counter, .stat-number').forEach(el => {
+            if (el.hasAttribute('data-target')) {
+                counterObserver.observe(el);
+            }
+        });
+
+        // 年份更新
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // 导航栏滚动效果
+        let lastScroll = 0;
+        const nav = document.querySelector('nav');
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+
+            if (currentScroll > 100) {
+                nav.style.background = 'rgba(0, 0, 0, 0.8)';
+            } else {
+                nav.style.background = 'rgba(0, 0, 0, 0.5)';
+            }
+
+            lastScroll = currentScroll;
+        });
+    </script>
+</body>
+</html>
