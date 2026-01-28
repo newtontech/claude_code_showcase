@@ -7,10 +7,27 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: '#ff4800',
-        secondary: '#00f0ff',
-        accent: '#ff00ff',
-        bg: '#080808',
+        primary: {
+          DEFAULT: '#D97757', // Anthropic-ish Terra Cotta
+          light: '#F2A085',
+          dark: '#B55A3B',
+        },
+        secondary: {
+          DEFAULT: '#8898AA', // Cool Grey
+          light: '#AAB8C8',
+          dark: '#667585',
+        },
+        accent: {
+          DEFAULT: '#D4B483', // Champagne
+          light: '#E6C99C',
+          dark: '#B89B6D',
+        },
+        bg: {
+          DEFAULT: '#0D0D0F', // Deep Charcoal
+          lighter: '#1A1A1E',
+          darker: '#050506',
+        },
+        surface: '#1E1E21',
       },
       fontFamily: {
         display: ['Orbitron', 'sans-serif'],

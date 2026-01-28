@@ -39,29 +39,24 @@ const Hero = () => {
             transition={{ duration: 0.8 }}
           >
             <div className="inline-block glass px-4 py-2 rounded-full text-sm font-code">
-              <span className="text-primary">◆</span> AI驱动的开发革命
+              <span className="text-primary">◆</span> AI Coding Assistant with Superpowers
             </div>
 
             <h1 className="font-display font-black leading-none">
-              <span className="block text-6xl md:text-8xl">让代码</span>
-              <span className="block text-6xl md:text-8xl gradient-text glow">自己写</span>
-              <span className="block text-4xl md:text-6xl mt-4 text-white/60">自己改</span>
+              <span className="block text-6xl md:text-8xl">Claude</span>
+              <span className="block text-6xl md:text-8xl gradient-text glow">Code</span>
             </h1>
 
             <p className="text-xl md:text-2xl text-white/70 max-w-xl leading-relaxed">
-              Claude Code 重新定义软件开发流程。
-              <br />
-              <span className="text-secondary">10倍效率提升。</span>
-              <br />
-              <span className="text-primary">100%质量保证。</span>
+              Your partner in code. Agentic, autonomous, and integrated directly into your terminal.
             </p>
 
             <div className="flex flex-wrap gap-4">
               <button className="btn-primary px-8 py-4 rounded-full font-bold text-lg text-white">
-                开始体验 →
+                Get Started
               </button>
               <button className="glass px-8 py-4 rounded-full font-bold text-lg hover:bg-white/10 transition-colors">
-                查看文档
+                View Docs
               </button>
             </div>
           </motion.div>
@@ -87,39 +82,23 @@ const Hero = () => {
                 <div className="w-3 h-3 rounded-full bg-red-500"></div>
                 <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
                 <div className="w-3 h-3 rounded-full bg-green-500"></div>
-                <span className="ml-4 font-code text-sm text-white/50">demo.tsx</span>
+                <span className="ml-4 font-code text-sm text-white/50">terminal</span>
               </div>
-              <pre className="p-6 font-code text-sm overflow-x-auto">
+              <pre className="p-6 font-code text-sm overflow-x-auto text-gray-300">
                 <code>
-                  <span className="text-purple-400">import</span>{' '}
-                  <span className="text-blue-400">{`{`}</span>{' '}
-                  <span className="text-green-400">Claude</span>{' '}
-                  <span className="text-blue-400">{`}`}</span>{' '}
-                  <span className="text-purple-400">from</span>{' '}
-                  <span className="text-yellow-400">'@anthropic/ai'</span>
+                  <span className="text-green-400">$</span> claude code
                   {'\n\n'}
-                  <span className="text-purple-400">const</span>{' '}
-                  <span className="text-blue-400">assistant</span>{' '}
-                  <span className="text-white">=</span>{' '}
-                  <span className="text-purple-400">new</span>{' '}
-                  <span className="text-green-400">Claude</span>
-                  <span className="text-blue-400">()</span>
+                  <span className="text-blue-400">?</span> <span className="font-bold text-white">How can I help you today?</span>
+                  {'\n'}
+                  <span className="text-gray-500">{`>`}</span> Build a desktop agent using OpenManus
                   {'\n\n'}
-                  <span className="text-white/50">// 让 Claude 创建一个完整的组件</span>
+                  <span className="text-primary">●</span> <span className="text-primary">Planning task...</span>
                   {'\n'}
-                  <span className="text-purple-400">await</span>{' '}
-                  <span className="text-blue-400">assistant</span>
-                  <span className="text-white">.</span>
-                  <span className="text-yellow-400">generate</span>
-                  <span className="text-blue-400">(</span>
-                  <span className="text-yellow-400">`创建一个带有动画的用户仪表板`</span>
-                  <span className="text-blue-400">)</span>
+                  <span className="text-secondary">○</span> Analyzing project structure
+                  {'\n'}
+                  <span className="text-secondary">○</span> Creating implementation plan
                   {'\n\n'}
-                  <span className="text-green-400">// ✨ 实时生成生产级代码</span>
-                  {'\n'}
-                  <span className="text-green-400">// 🎨 自动应用最佳实践</span>
-                  {'\n'}
-                  <span className="text-green-400">// ⚡️ 包含测试和文档</span>
+                  <span className="text-green-400">✓</span> <span className="text-white">Plan approved. Starting execution.</span>
                 </code>
               </pre>
             </motion.div>
