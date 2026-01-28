@@ -1,0 +1,51 @@
+{
+  "plan_goal": "把 data/notes.txt 总结成 3 条要点，写到 out/summary.md",
+  "plan_risk_level": "LOW",
+  "workspace_root": "/Users/yhm/Desktop/DP_toC/openmanus2/test_workspace",
+  "total_steps": 3,
+  "successful_steps": 1,
+  "failed_steps": 1,
+  "skipped_steps": 0,
+  "overall_status": "failure",
+  "start_time": "2026-01-25T22:59:18.599143",
+  "end_time": "2026-01-25T22:59:18.600424",
+  "traces": [
+    {
+      "step_id": "1",
+      "tool": "file",
+      "inputs_digest": "81cd23ad34ef8900",
+      "output_digest": null,
+      "start_time": "2026-01-25T22:59:18.600212",
+      "end_time": "2026-01-25T22:59:18.600384",
+      "status": "success",
+      "error": null,
+      "inputs": {
+        "action": "read_text",
+        "path": "data/notes.txt"
+      },
+      "outputs": {
+        "content": "This is a test file with some content.\nIt has multiple lines.\nAnd three key points.\n",
+        "path": "/Users/yhm/Desktop/DP_toC/openmanus2/test_workspace/data/notes.txt"
+      }
+    },
+    {
+      "step_id": "2",
+      "tool": "llm",
+      "inputs_digest": "c0fdb5cf1efe2d31",
+      "output_digest": null,
+      "start_time": "2026-01-25T22:59:18.600407",
+      "end_time": "2026-01-25T22:59:18.600416",
+      "status": "failure",
+      "error": "Tool 'llm' not found in registry",
+      "inputs": {
+        "prompt": "Summarize the following content into 3 bullet points",
+        "content": "ref:step:1.output"
+      },
+      "outputs": null
+    }
+  ],
+  "error_summary": null,
+  "produced_files": [
+    "/Users/yhm/Desktop/DP_toC/openmanus2/test_workspace/data/notes.txt"
+  ]
+}

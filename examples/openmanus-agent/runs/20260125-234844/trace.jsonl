@@ -1,0 +1,1 @@
+{"step_id":"1","tool":"shell","inputs_digest":"649dbd1f89620327","output_digest":null,"start_time":"2026-01-25T23:48:44.397297","end_time":"2026-01-25T23:48:44.397326","status":"failure","error":"Missing 'cmd' in inputs","inputs":{"command":"mkdir -p 2048"},"outputs":null}

@@ -1,0 +1,30 @@
+{
+  "plan_goal": "告诉我这个项目完成了什么事情？",
+  "plan_risk_level": "LOW",
+  "workspace_root": "/Users/yhm/Desktop/DP_toC/openmanus2",
+  "total_steps": 7,
+  "successful_steps": 0,
+  "failed_steps": 1,
+  "skipped_steps": 0,
+  "overall_status": "failure",
+  "start_time": "2026-01-25T23:30:51.783075",
+  "end_time": "2026-01-25T23:30:51.800448",
+  "traces": [
+    {
+      "step_id": "1",
+      "tool": "shell",
+      "inputs_digest": "b55ac4d187b75d63",
+      "output_digest": null,
+      "start_time": "2026-01-25T23:30:51.800109",
+      "end_time": "2026-01-25T23:30:51.800429",
+      "status": "failure",
+      "error": "Missing 'cmd' in inputs",
+      "inputs": {
+        "command": "ls -la"
+      },
+      "outputs": null
+    }
+  ],
+  "error_summary": null,
+  "produced_files": []
+}

@@ -1,0 +1,36 @@
+{
+  "plan_goal": "Read test.txt",
+  "plan_risk_level": "LOW",
+  "workspace_root": "/private/var/folders/0g/lcj4jntn7_9dqsppn6l23ryc0000gn/T/tmpdcz6e1t7",
+  "total_steps": 1,
+  "successful_steps": 1,
+  "failed_steps": 0,
+  "skipped_steps": 0,
+  "overall_status": "success",
+  "start_time": "2026-01-25T22:57:28.465136",
+  "end_time": "2026-01-25T22:57:28.465658",
+  "traces": [
+    {
+      "step_id": "1",
+      "tool": "file",
+      "inputs_digest": "98c931e304981755",
+      "output_digest": null,
+      "start_time": "2026-01-25T22:57:28.465467",
+      "end_time": "2026-01-25T22:57:28.465652",
+      "status": "success",
+      "error": null,
+      "inputs": {
+        "action": "read_text",
+        "path": "test.txt"
+      },
+      "outputs": {
+        "content": "Hello, world!",
+        "path": "/private/var/folders/0g/lcj4jntn7_9dqsppn6l23ryc0000gn/T/tmpdcz6e1t7/test.txt"
+      }
+    }
+  ],
+  "error_summary": null,
+  "produced_files": [
+    "/private/var/folders/0g/lcj4jntn7_9dqsppn6l23ryc0000gn/T/tmpdcz6e1t7/test.txt"
+  ]
+}

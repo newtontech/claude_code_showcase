@@ -1,0 +1,64 @@
+{
+  "goal": "创建一个 2048 文件夹，在当前项目中生成一个完整的 2048 网页小游戏，包含 HTML、CSS 和 JavaScript 文件，支持键盘方向键操作",
+  "risk_level": "MEDIUM",
+  "workspace_root": "/var/folders/0g/lcj4jntn7_9dqsppn6l23ryc0000gn/T/tmpy_e6keru",
+  "steps": [
+    {
+      "id": "1",
+      "description": "Create a 2048 directory in the workspace",
+      "tool": "shell",
+      "inputs": {
+        "command": "mkdir -p 2048"
+      },
+      "produces": "directory:2048"
+    },
+    {
+      "id": "2",
+      "description": "Generate HTML file for the 2048 game",
+      "tool": "file",
+      "inputs": {
+        "action": "write_text",
+        "path": "2048/index.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>2048 Game</title>\n    <link rel=\"stylesheet\" href=\"style.css\">\n</head>\n<body>\n    <div class=\"container\">\n        <h1>2048</h1>\n        <div class=\"score-container\">Score: <span id=\"score\">0</span></div>\n        <div class=\"grid\" id=\"grid\"></div>\n        <div class=\"instructions\">Use arrow keys to move tiles. Combine tiles with the same number to reach 2048!</div>\n        <button id=\"restart\">Restart Game</button>\n    </div>\n    <script src=\"script.js\"></script>\n</body>\n</html>"
+      },
+      "produces": "file:index.html"
+    },
+    {
+      "id": "3",
+      "description": "Generate CSS file for styling the 2048 game",
+      "tool": "file",
+      "inputs": {
+        "action": "write_text",
+        "path": "2048/style.css",
+        "content": "body {\n    font-family: Arial, sans-serif;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    height: 100vh;\n    margin: 0;\n    background-color: #faf8ef;\n}\n.container {\n    text-align: center;\n}\nh1 {\n    color: #776e65;\n    font-size: 48px;\n    margin-bottom: 10px;\n}\n.score-container {\n    font-size: 24px;\n    color: #776e65;\n    margin-bottom: 20px;\n}\n.grid {\n    display: grid;\n    grid-template-columns: repeat(4, 100px);\n    grid-gap: 10px;\n    background-color: #bbada0;\n    padding: 10px;\n    border-radius: 6px;\n    margin: 0 auto 20px;\n}\n.tile {\n    width: 100px;\n    height: 100px;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    font-size: 36px;\n    font-weight: bold;\n    border-radius: 6px;\n    background-color: #cdc1b4;\n    color: #776e65;\n}\n.tile-2 { background-color: #eee4da; }\n.tile-4 { background-color: #ede0c8; }\n.tile-8 { background-color: #f2b179; color: #f9f6f2; }\n.tile-16 { background-color: #f59563; color: #f9f6f2; }\n.tile-32 { background-color: #f67c5f; color: #f9f6f2; }\n.tile-64 { background-color: #f65e3b; color: #f9f6f2; }\n.tile-128 { background-color: #edcf72; color: #f9f6f2; }\n.tile-256 { background-color: #edcc61; color: #f9f6f2; }\n.tile-512 { background-color: #edc850; color: #f9f6f2; }\n.tile-1024 { background-color: #edc53f; color: #f9f6f2; }\n.tile-2048 { background-color: #edc22e; color: #f9f6f2; }\n.instructions {\n    font-size: 16px;\n    color: #776e65;\n    margin-bottom: 20px;\n}\nbutton {\n    padding: 10px 20px;\n    font-size: 18px;\n    background-color: #8f7a66;\n    color: #f9f6f2;\n    border: none;\n    border-radius: 6px;\n    cursor: pointer;\n}\nbutton:hover {\n    background-color: #776e65;\n}"
+      },
+      "produces": "file:style.css"
+    },
+    {
+      "id": "4",
+      "description": "Generate JavaScript file for game logic with keyboard arrow key support",
+      "tool": "file",
+      "inputs": {
+        "action": "write_text",
+        "path": "2048/script.js",
+        "content": "document.addEventListener('DOMContentLoaded', function() {\n    const gridSize = 4;\n    let grid = [];\n    let score = 0;\n    const gridElement = document.getElementById('grid');\n    const scoreElement = document.getElementById('score');\n    const restartButton = document.getElementById('restart');\n\n    function initGrid() {\n        grid = [];\n        for (let i = 0; i < gridSize; i++) {\n            grid[i] = [];\n            for (let j = 0; j < gridSize; j++) {\n                grid[i][j] = 0;\n            }\n        }\n        addRandomTile();\n        addRandomTile();\n        renderGrid();\n    }\n\n    function addRandomTile() {\n        let emptyCells = [];\n        for (let i = 0; i < gridSize; i++) {\n            for (let j = 0; j < gridSize; j++) {\n                if (grid[i][j] === 0) {\n                    emptyCells.push({x: i, y: j});\n                }\n            }\n        }\n        if (emptyCells.length > 0) {\n            let cell = emptyCells[Math.floor(Math.random() * emptyCells.length)];\n            grid[cell.x][cell.y] = Math.random() < 0.9 ? 2 : 4;\n        }\n    }\n\n    function renderGrid() {\n        gridElement.innerHTML = '';\n        for (let i = 0; i < gridSize; i++) {\n            for (let j = 0; j < gridSize; j++) {\n                let tile = document.createElement('div');\n                tile.className = 'tile';\n                if (grid[i][j] !== 0) {\n                    tile.textContent = grid[i][j];\n                    tile.classList.add('tile-' + grid[i][j]);\n                }\n                gridElement.appendChild(tile);\n            }\n        }\n        scoreElement.textContent = score;\n    }\n\n    function move(direction) {\n        let moved = false;\n        if (direction === 'left') {\n            for (let i = 0; i < gridSize; i++) {\n                let row = grid[i];\n                let newRow = row.filter(val => val !== 0);\n                for (let j = 0; j < newRow.length - 1; j++) {\n                    if (newRow[j] === newRow[j + 1]) {\n                        newRow[j] *= 2;\n                        score += newRow[j];\n                        newRow.splice(j + 1, 1);\n                    }\n                }\n                while (newRow.length < gridSize) newRow.push(0);\n                if (JSON.stringify(row) !== JSON.stringify(newRow)) moved = true;\n                grid[i] = newRow;\n            }\n        } else if (direction === 'right') {\n            for (let i = 0; i < gridSize; i++) {\n                let row = grid[i];\n                let newRow = row.filter(val => val !== 0);\n                for (let j = newRow.length - 1; j > 0; j--) {\n                    if (newRow[j] === newRow[j - 1]) {\n                        newRow[j] *= 2;\n                        score += newRow[j];\n                        newRow.splice(j - 1, 1);\n                        j--;\n                    }\n                }\n                while (newRow.length < gridSize) newRow.unshift(0);\n                if (JSON.stringify(row) !== JSON.stringify(newRow)) moved = true;\n                grid[i] = newRow;\n            }\n        } else if (direction === 'up') {\n            for (let j = 0; j < gridSize; j++) {\n                let column = [];\n                for (let i = 0; i < gridSize; i++) column.push(grid[i][j]);\n                let newColumn = column.filter(val => val !== 0);\n                for (let i = 0; i < newColumn.length - 1; i++) {\n                    if (newColumn[i] === newColumn[i + 1]) {\n                        newColumn[i] *= 2;\n                        score += newColumn[i];\n                        newColumn.splice(i + 1, 1);\n                    }\n                }\n                while (newColumn.length < gridSize) newColumn.push(0);\n                for (let i = 0; i < gridSize; i++) {\n                    if (grid[i][j] !== newColumn[i]) moved = true;\n                    grid[i][j] = newColumn[i];\n                }\n            }\n        } else if (direction === 'down') {\n            for (let j = 0; j < gridSize; j++) {\n                let column = [];\n                for (let i = 0; i < gridSize; i++) column.push(grid[i][j]);\n                let newColumn = column.filter(val => val !== 0);\n                for (let i = newColumn.length - 1; i > 0; i--) {\n                    if (newColumn[i] === newColumn[i - 1]) {\n                        newColumn[i] *= 2;\n                        score += newColumn[i];\n                        newColumn.splice(i - 1, 1);\n                        i--;\n                    }\n                }\n                while (newColumn.length < gridSize) newColumn.unshift(0);\n                for (let i = 0; i < gridSize; i++) {\n                    if (grid[i][j] !== newColumn[i]) moved = true;\n                    grid[i][j] = newColumn[i];\n                }\n            }\n        }\n        if (moved) {\n            addRandomTile();\n            renderGrid();\n        }\n    }\n\n    document.addEventListener('keydown', function(event) {\n        switch(event.key) {\n            case 'ArrowLeft':\n                move('left');\n                break;\n            case 'ArrowRight':\n                move('right');\n                break;\n            case 'ArrowUp':\n                move('up');\n                break;\n            case 'ArrowDown':\n                move('down');\n                break;\n        }\n    });\n\n    restartButton.addEventListener('click', function() {\n        score = 0;\n        initGrid();\n    });\n\n    initGrid();\n});"
+      },
+      "produces": "file:script.js"
+    },
+    {
+      "id": "5",
+      "description": "Verify that the 2048 directory and files are created",
+      "tool": "shell",
+      "inputs": {
+        "command": "ls -la 2048/"
+      },
+      "produces": "list of files in 2048 directory"
+    }
+  ],
+  "success_criteria": [
+    "Directory 2048 exists",
+    "Files index.html, style.css, and script.js exist in 2048 directory",
+    "All files have non-zero size"
+  ],
+  "created_at": "2026-01-25T23:48:44.393367"
+}

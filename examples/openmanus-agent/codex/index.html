@@ -1,0 +1,867 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Codex · 作用展示</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;400;500;600;700;800&family=IBM+Plex+Mono:wght@300;400;600&family=Source+Serif+4:opsz,wght@8..60,300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --paper: #f7f1e6;
+      --ink: #13161c;
+      --muted: #545b67;
+      --accent: #e47a2e;
+      --accent-2: #1f7a6c;
+      --accent-3: #e34f4f;
+      --line: rgba(19, 22, 28, 0.14);
+      --glow: 0 26px 60px rgba(31, 122, 108, 0.18);
+      --shadow: 0 16px 50px rgba(20, 22, 28, 0.16);
+      --radius: 20px;
+      --font-display: "Bricolage Grotesque", "Arial Black", sans-serif;
+      --font-body: "Source Serif 4", "Times New Roman", serif;
+      --font-mono: "IBM Plex Mono", "Courier New", monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: radial-gradient(1000px 700px at 15% 10%, rgba(31, 122, 108, 0.14), transparent 60%),
+        radial-gradient(900px 500px at 85% 15%, rgba(228, 122, 46, 0.14), transparent 55%),
+        radial-gradient(700px 500px at 50% 90%, rgba(227, 79, 79, 0.12), transparent 65%),
+        var(--paper);
+      color: var(--ink);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .grain,
+    .grid-overlay {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .grain {
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='160' height='160' filter='url(%23n)' opacity='0.22'/></svg>");
+      opacity: 0.35;
+      mix-blend-mode: multiply;
+    }
+
+    .grid-overlay {
+      background-image:
+        linear-gradient(transparent 97%, rgba(19, 22, 28, 0.08) 98%),
+        linear-gradient(90deg, transparent 97%, rgba(19, 22, 28, 0.08) 98%);
+      background-size: 48px 48px;
+      opacity: 0.25;
+    }
+
+    .ribbon {
+      position: fixed;
+      top: 18%;
+      left: -140px;
+      transform: rotate(-90deg);
+      font-family: var(--font-display);
+      letter-spacing: 0.35em;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      color: rgba(19, 22, 28, 0.4);
+      z-index: 1;
+    }
+
+    .page {
+      position: relative;
+      z-index: 2;
+      width: min(1180px, 92vw);
+      margin: 0 auto;
+      padding: 36px 0 80px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      font-size: 0.95rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--font-display);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 1rem;
+    }
+
+    .brand-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 4px;
+      background: linear-gradient(140deg, var(--accent-2), var(--accent));
+      box-shadow: var(--glow);
+      animation: pulse 5s ease-in-out infinite;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+      font-family: var(--font-display);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.72rem;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      position: relative;
+      padding-bottom: 4px;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent-2);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .cta-btn {
+      border: 1px solid rgba(19, 22, 28, 0.25);
+      background: transparent;
+      padding: 10px 20px;
+      border-radius: 999px;
+      font-family: var(--font-display);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-size: 0.72rem;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--glow);
+      background: rgba(31, 122, 108, 0.08);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 26px;
+      margin-top: 52px;
+      align-items: start;
+    }
+
+    .hero-main {
+      grid-column: span 7;
+      display: grid;
+      gap: 20px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid rgba(19, 22, 28, 0.2);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-family: var(--font-display);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-size: 0.7rem;
+      width: fit-content;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.6);
+    }
+
+    .eyebrow span {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-2);
+      box-shadow: 0 0 12px rgba(31, 122, 108, 0.3);
+    }
+
+    h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.6rem, 4.6vw, 4.4rem);
+      margin: 0;
+      line-height: 1.05;
+      letter-spacing: 0.01em;
+      max-width: 18ch;
+    }
+
+    .hero-subtitle {
+      font-size: 1.15rem;
+      color: var(--muted);
+      line-height: 1.75;
+      max-width: 48ch;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .primary-btn,
+    .ghost-btn {
+      border-radius: 999px;
+      padding: 12px 22px;
+      font-family: var(--font-display);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-size: 0.74rem;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .primary-btn {
+      background: linear-gradient(135deg, var(--accent-2), var(--accent));
+      border: none;
+      color: #0f1417;
+      box-shadow: var(--shadow);
+    }
+
+    .ghost-btn {
+      background: transparent;
+      border: 1px solid rgba(19, 22, 28, 0.35);
+      color: var(--ink);
+    }
+
+    .primary-btn:hover,
+    .ghost-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--glow);
+    }
+
+    a:focus-visible,
+    button:focus-visible {
+      outline: 2px dashed var(--accent-2);
+      outline-offset: 4px;
+    }
+
+    .accent {
+      color: var(--accent-2);
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-family: var(--font-display);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.65rem;
+      color: var(--muted);
+    }
+
+    .hero-tags span {
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.55);
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 8px;
+    }
+
+    .stat {
+      padding: 16px 18px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.7);
+      box-shadow: 0 10px 24px rgba(20, 22, 28, 0.08);
+    }
+
+    .stat strong {
+      display: block;
+      font-family: var(--font-display);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      color: var(--accent-2);
+    }
+
+    .stat span {
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .hero-aside {
+      grid-column: span 5;
+      display: grid;
+      gap: 18px;
+    }
+
+    .card {
+      padding: 22px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.8);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(8px);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--font-display);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .tag-pill {
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(31, 122, 108, 0.12);
+      color: var(--accent-2);
+      font-family: var(--font-display);
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .plan-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .plan-list li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px dashed rgba(19, 22, 28, 0.18);
+      padding-bottom: 8px;
+    }
+
+    .plan-list span {
+      font-family: var(--font-display);
+      color: var(--ink);
+    }
+
+    .terminal-card {
+      background: #11171a;
+      color: #e9f6f1;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 18px 40px rgba(15, 20, 26, 0.45);
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+      line-height: 1.65;
+    }
+
+    .terminal-line {
+      display: flex;
+      gap: 12px;
+    }
+
+    .terminal-line span:first-child {
+      color: #7be0c5;
+    }
+
+    .section {
+      margin-top: 84px;
+      display: grid;
+      gap: 24px;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      font-size: 0.75rem;
+      color: var(--accent-2);
+    }
+
+    .impact-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .impact-card {
+      padding: 22px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.72);
+      display: grid;
+      gap: 12px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s ease, border 0.2s ease;
+    }
+
+    .impact-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(31, 122, 108, 0.18), transparent 55%);
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .impact-card:hover {
+      transform: translateY(-6px);
+      border: 1px solid rgba(31, 122, 108, 0.35);
+    }
+
+    .impact-card:hover::after {
+      opacity: 1;
+    }
+
+    .impact-card h3 {
+      margin: 0;
+      font-family: var(--font-display);
+    }
+
+    .impact-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .cap-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .cap-card {
+      padding: 20px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: linear-gradient(160deg, rgba(255, 255, 255, 0.9), rgba(247, 241, 230, 0.7));
+      box-shadow: 0 12px 30px rgba(20, 22, 28, 0.1);
+      display: grid;
+      gap: 10px;
+    }
+
+    .cap-card h4 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+    }
+
+    .cap-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .flow-step {
+      padding: 18px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.8);
+      position: relative;
+    }
+
+    .flow-step::after {
+      content: "";
+      position: absolute;
+      right: -10px;
+      top: 50%;
+      width: 20px;
+      height: 2px;
+      background: rgba(19, 22, 28, 0.18);
+    }
+
+    .flow-step:last-child::after {
+      display: none;
+    }
+
+    .flow-step strong {
+      font-family: var(--font-display);
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+    }
+
+    .flow-step p {
+      margin: 12px 0 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .showcase {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .prompt-card {
+      padding: 22px;
+      border-radius: 20px;
+      background: #12171b;
+      color: #e4f7f1;
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+      line-height: 1.7;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 18px 40px rgba(17, 23, 30, 0.38);
+    }
+
+    .prompt-card strong {
+      color: #7be0c5;
+    }
+
+    .callout {
+      padding: 22px;
+      border-radius: 20px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.8);
+      box-shadow: var(--shadow);
+    }
+
+    .callout h3 {
+      margin-top: 0;
+      font-family: var(--font-display);
+    }
+
+    footer {
+      margin-top: 84px;
+      border-top: 1px solid rgba(19, 22, 28, 0.18);
+      padding-top: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .reveal {
+      animation: rise 0.8s ease forwards;
+      will-change: opacity, transform;
+    }
+
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
+    .delay-4 { animation-delay: 0.4s; }
+    .delay-5 { animation-delay: 0.5s; }
+    .delay-6 { animation-delay: 0.6s; }
+
+    @keyframes rise {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 0.9;
+      }
+      50% {
+        transform: scale(1.18);
+        opacity: 1;
+      }
+    }
+
+    @media (max-width: 1100px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+      .hero-main,
+      .hero-aside {
+        grid-column: auto;
+      }
+      .impact-grid,
+      .cap-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .flow {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .flow-step::after {
+        display: none;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .nav-links {
+        flex-wrap: wrap;
+      }
+      .hero-stats {
+        grid-template-columns: 1fr;
+      }
+      .impact-grid,
+      .cap-grid,
+      .flow,
+      .showcase {
+        grid-template-columns: 1fr;
+      }
+      footer {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .ribbon {
+        display: none;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="grain"></div>
+  <div class="grid-overlay"></div>
+  <div class="ribbon">CODEX · DELIVERY ENGINE · 2026</div>
+
+  <div class="page">
+    <header class="topbar reveal">
+      <div class="brand">
+        <span class="brand-dot"></span>
+        Codex Studio
+      </div>
+      <nav class="nav-links">
+        <a href="#impact">作用</a>
+        <a href="#capabilities">能力</a>
+        <a href="#flow">路径</a>
+        <a href="#demo">示例</a>
+      </nav>
+      <button class="cta-btn">进入协作</button>
+    </header>
+
+    <main class="hero">
+      <section class="hero-main">
+        <div class="eyebrow reveal delay-1"><span></span> AI 协作引擎</div>
+        <h1 class="reveal delay-2">Codex 把需求推进为 <span class="accent">可验证的交付</span>。</h1>
+        <p class="hero-subtitle reveal delay-3">
+          它读取仓库与历史决策，先建立上下文，再给出影响分析与修改策略；
+          然后精准落地改动，生成测试与文档，最终输出可追溯的交付证据。
+        </p>
+        <div class="hero-actions reveal delay-4">
+          <button class="primary-btn">启动任务</button>
+          <button class="ghost-btn">查看作用图谱</button>
+        </div>
+        <div class="hero-tags reveal delay-5">
+          <span>影响评估</span>
+          <span>改动策略</span>
+          <span>测试生成</span>
+          <span>PR 总结</span>
+          <span>回滚路径</span>
+        </div>
+        <div class="hero-stats reveal delay-6">
+          <div class="stat">
+            <strong>多文件建模</strong>
+            <span>跨模块定位影响范围</span>
+          </div>
+          <div class="stat">
+            <strong>风险控制</strong>
+            <span>可回滚、可验证的改动</span>
+          </div>
+          <div class="stat">
+            <strong>验证闭环</strong>
+            <span>测试 + 回归 + 证据链</span>
+          </div>
+        </div>
+      </section>
+
+      <aside class="hero-aside">
+        <div class="card reveal delay-2">
+          <div class="card-header">
+            任务蓝图
+            <span class="tag-pill">Live</span>
+          </div>
+          <ul class="plan-list">
+            <li>仓库扫描 <span>24 files</span></li>
+            <li>影响评估 <span>6 modules</span></li>
+            <li>改动策略 <span>4 commits</span></li>
+            <li>验证清单 <span>lint + unit + e2e</span></li>
+          </ul>
+        </div>
+
+        <div class="card terminal-card reveal delay-3">
+          <div class="terminal-line"><span>$</span><span>rg "auth" services/</span></div>
+          <div class="terminal-line"><span>$</span><span>apply_patch add_tenant_guard</span></div>
+          <div class="terminal-line"><span>$</span><span>pnpm test --filter auth</span></div>
+          <div class="terminal-line"><span>✓</span><span>关键路径通过 · coverage 94%</span></div>
+        </div>
+      </aside>
+    </main>
+
+    <section id="impact" class="section">
+      <div class="section-title">Codex 的作用</div>
+      <div class="impact-grid">
+        <article class="impact-card reveal delay-1">
+          <h3>把理解变成行动</h3>
+          <p>先建模上下文，再给出影响范围与改动策略，避免盲改。</p>
+        </article>
+        <article class="impact-card reveal delay-2">
+          <h3>把协作变成流程</h3>
+          <p>把需求、风险、策略、验证编排成连续动作，减少反复确认与信息损耗。</p>
+        </article>
+        <article class="impact-card reveal delay-3">
+          <h3>把交付变成闭环</h3>
+          <p>自动测试 + 回归检查，让交付有证据、有痕迹、有节奏。</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="capabilities" class="section">
+      <div class="section-title">能力矩阵</div>
+      <div class="cap-grid">
+        <article class="cap-card reveal delay-1">
+          <h4>上下文建模</h4>
+          <p>从仓库结构、依赖关系到历史选择建立全局视图。</p>
+        </article>
+        <article class="cap-card reveal delay-2">
+          <h4>影响分析与策略</h4>
+          <p>在动手前评估影响范围，并给出可回滚策略。</p>
+        </article>
+        <article class="cap-card reveal delay-3">
+          <h4>精确改动与重构</h4>
+          <p>保持行为一致的前提下推进结构优化与性能提升。</p>
+        </article>
+        <article class="cap-card reveal delay-4">
+          <h4>测试与验证自动化</h4>
+          <p>覆盖关键路径，用数据回答“是否可上线”。</p>
+        </article>
+        <article class="cap-card reveal delay-5">
+          <h4>文档与变更说明</h4>
+          <p>输出升级指南、变更摘要与迁移说明。</p>
+        </article>
+        <article class="cap-card reveal delay-1">
+          <h4>多工具编排</h4>
+          <p>终端、API、浏览器协同，形成完整执行链路。</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="flow" class="section">
+      <div class="section-title">交付路径</div>
+      <div class="flow">
+        <div class="flow-step reveal delay-1">
+          <strong>01 解析</strong>
+          <p>拆解需求与约束，标注风险点。</p>
+        </div>
+        <div class="flow-step reveal delay-2">
+          <strong>02 规划</strong>
+          <p>规划策略与执行顺序，明确验证方法。</p>
+        </div>
+        <div class="flow-step reveal delay-3">
+          <strong>03 实施</strong>
+          <p>精确修改代码，保持结构与风格统一。</p>
+        </div>
+        <div class="flow-step reveal delay-4">
+          <strong>04 验证</strong>
+          <p>跑测试、回归并记录交付证据。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="deliverables" class="section">
+      <div class="section-title">交付产物</div>
+      <div class="cap-grid">
+        <article class="cap-card reveal delay-1">
+          <h4>变更摘要</h4>
+          <p>明确列出修改点、影响范围与依赖关系。</p>
+        </article>
+        <article class="cap-card reveal delay-2">
+          <h4>测试结果</h4>
+          <p>记录关键路径测试与回归结果。</p>
+        </article>
+        <article class="cap-card reveal delay-3">
+          <h4>风险与回滚</h4>
+          <p>标注风险等级并提供回滚步骤。</p>
+        </article>
+        <article class="cap-card reveal delay-4">
+          <h4>升级指南</h4>
+          <p>给出迁移步骤与注意事项。</p>
+        </article>
+        <article class="cap-card reveal delay-5">
+          <h4>审查要点</h4>
+          <p>把评审关注点与边界条件写清楚。</p>
+        </article>
+        <article class="cap-card reveal delay-1">
+          <h4>可追溯记录</h4>
+          <p>将决策与依据记录为可复用知识。</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="demo" class="section">
+      <div class="section-title">真实示例</div>
+      <div class="showcase">
+        <div class="prompt-card reveal delay-1">
+          <strong>需求：</strong>
+          “将支付流程升级为多租户模式，同时兼容旧版本。”
+          <br /><br />
+          <strong>Codex 行动：</strong>
+          - 生成三种迁移方案，标出风险与回滚路径<br />
+          - 更新鉴权中间件与数据模型<br />
+          - 补齐关键路径测试并输出升级文档
+        </div>
+        <div class="callout reveal delay-2">
+          <h3>一个关键词：可信</h3>
+          <p>
+            Codex 的价值不是“写得多”，而是“交付稳”。从理解到验证，它让团队可复用、可回溯、可升级。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <span>Codex · 让工程协作像产品一样可信</span>
+      <span>Version 2026 · Designed for real teams</span>
+    </footer>
+  </div>
+</body>
+</html>

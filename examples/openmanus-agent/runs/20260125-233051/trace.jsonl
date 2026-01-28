@@ -1,0 +1,1 @@
+{"step_id":"1","tool":"shell","inputs_digest":"b55ac4d187b75d63","output_digest":null,"start_time":"2026-01-25T23:30:51.800109","end_time":"2026-01-25T23:30:51.800429","status":"failure","error":"Missing 'cmd' in inputs","inputs":{"command":"ls -la"},"outputs":null}

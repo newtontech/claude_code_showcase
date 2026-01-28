@@ -1,0 +1,21 @@
+{
+  "goal": "Read test.txt",
+  "risk_level": "LOW",
+  "workspace_root": "/var/folders/0g/lcj4jntn7_9dqsppn6l23ryc0000gn/T/tmpeayirpce",
+  "steps": [
+    {
+      "id": "1",
+      "description": "Read test file",
+      "tool": "file",
+      "inputs": {
+        "action": "read_text",
+        "path": "test.txt"
+      },
+      "produces": null
+    }
+  ],
+  "success_criteria": [
+    "File read successfully"
+  ],
+  "created_at": "2026-01-25T23:04:47.273018"
+}

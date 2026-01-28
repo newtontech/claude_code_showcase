@@ -1,0 +1,44 @@
+{
+  "goal": "把 data/notes.txt 总结成 3 条要点，写到 out/summary.md",
+  "risk_level": "LOW",
+  "workspace_root": "/Users/yhm/Desktop/DP_toC/openmanus2/test_workspace",
+  "steps": [
+    {
+      "id": "1",
+      "description": "Read the source file",
+      "tool": "file",
+      "inputs": {
+        "action": "read_text",
+        "path": "data/notes.txt"
+      },
+      "produces": "content:source_content"
+    },
+    {
+      "id": "2",
+      "description": "Generate summary using LLM",
+      "tool": "llm",
+      "inputs": {
+        "prompt": "Summarize the following content into 3 bullet points",
+        "content": "ref:step:1.output"
+      },
+      "produces": "content:summary"
+    },
+    {
+      "id": "3",
+      "description": "Write summary to output file",
+      "tool": "file",
+      "inputs": {
+        "action": "write_text",
+        "path": "out/summary.md",
+        "content": "ref:step:2.output"
+      },
+      "produces": "file:out/summary.md"
+    }
+  ],
+  "success_criteria": [
+    "File out/summary.md exists",
+    "File contains 3 bullet points starting with '-'",
+    "All steps completed successfully"
+  ],
+  "created_at": "2026-01-25T22:59:18.596728"
+}

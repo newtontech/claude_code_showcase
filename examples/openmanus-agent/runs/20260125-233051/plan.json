@@ -1,0 +1,79 @@
+{
+  "goal": "告诉我这个项目完成了什么事情？",
+  "risk_level": "LOW",
+  "workspace_root": "/Users/yhm/Desktop/DP_toC/openmanus2",
+  "steps": [
+    {
+      "id": "1",
+      "description": "列出项目根目录内容，了解项目结构",
+      "tool": "shell",
+      "inputs": {
+        "command": "ls -la"
+      },
+      "produces": "项目根目录文件列表"
+    },
+    {
+      "id": "2",
+      "description": "查找README文件或项目说明文档",
+      "tool": "shell",
+      "inputs": {
+        "command": "find . -name \"README*\" -o -name \"readme*\" -o -name \"*.md\" | head -10"
+      },
+      "produces": "项目文档文件列表"
+    },
+    {
+      "id": "3",
+      "description": "读取主要的README文件内容",
+      "tool": "file",
+      "inputs": {
+        "action": "read_text",
+        "path": "README.md"
+      },
+      "produces": "README内容"
+    },
+    {
+      "id": "4",
+      "description": "检查是否有requirements.txt或package.json等依赖文件",
+      "tool": "shell",
+      "inputs": {
+        "command": "ls -la | grep -E '(requirements|package|setup|pyproject)'"
+      },
+      "produces": "项目依赖文件信息"
+    },
+    {
+      "id": "5",
+      "description": "查看项目的主要源代码目录结构",
+      "tool": "shell",
+      "inputs": {
+        "command": "find . -type f -name \"*.py\" -o -name \"*.js\" -o -name \"*.java\" | head -20"
+      },
+      "produces": "主要源代码文件列表"
+    },
+    {
+      "id": "6",
+      "description": "如果有Python文件，查看主要入口文件或关键模块",
+      "tool": "shell",
+      "inputs": {
+        "command": "grep -l \"def main\\|if __name__\" *.py 2>/dev/null || echo 'No main found'"
+      },
+      "produces": "主要Python入口文件"
+    },
+    {
+      "id": "7",
+      "description": "总结项目信息并生成报告",
+      "tool": "file",
+      "inputs": {
+        "action": "write_text",
+        "path": "project_analysis.txt",
+        "content": "项目分析报告：\n\n基于对项目目录的检查，该项目包含以下内容：\n\n1. 项目结构：ref:step:1.output\n2. 文档文件：ref:step:2.output\n3. README内容：ref:step:3.output\n4. 依赖管理：ref:step:4.output\n5. 源代码文件：ref:step:5.output\n6. 主要入口：ref:step:6.output\n\n请查看以上信息了解项目完成的具体功能。"
+      },
+      "produces": "项目分析报告文件"
+    }
+  ],
+  "success_criteria": [
+    "成功生成project_analysis.txt文件",
+    "成功读取项目README内容",
+    "成功列出项目结构"
+  ],
+  "created_at": "2026-01-25T23:30:26.816315"
+}

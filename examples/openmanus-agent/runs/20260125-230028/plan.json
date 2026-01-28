@@ -1,0 +1,21 @@
+{
+  "goal": "test dry run",
+  "risk_level": "LOW",
+  "workspace_root": "/Users/yhm/Desktop/DP_toC/openmanus2/test_workspace",
+  "steps": [
+    {
+      "id": "1",
+      "description": "Read a file",
+      "tool": "file",
+      "inputs": {
+        "action": "read_text",
+        "path": "test.txt"
+      },
+      "produces": "content:file_content"
+    }
+  ],
+  "success_criteria": [
+    "File read successfully"
+  ],
+  "created_at": "2026-01-25T23:00:28.433714"
+}
