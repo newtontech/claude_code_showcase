@@ -1,29 +1,55 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import Marquee from './components/Marquee';
-import ComparisonSection from './components/ComparisonSection';
-import WorkflowSection from './components/WorkflowSection';
-import EcosystemSection from './components/EcosystemSection';
-import ShowcaseSection from './components/ShowcaseSection';
+import CodeGeneration from './components/CodeGeneration';
+import DesignInnovation from './components/DesignInnovation';
+import FullStackDev from './components/FullStackDev';
+import Collaboration from './components/Collaboration';
+import Stats from './components/Stats';
 import CTA from './components/CTA';
 import Footer from './components/Footer';
+import Marquee from './components/Marquee';
+import { useScrollReveal } from './hooks';
 
 function App() {
   return (
-    <div className="grid-bg font-body bg-bg text-text min-h-screen">
-      <div className="noise-overlay" />
+    <div className="bg-bg text-text-primary overflow-x-hidden">
       <Navbar />
-      <main>
-        <Hero />
-        <Marquee />
-        <ComparisonSection />
-        <WorkflowSection />
-        <ShowcaseSection />
-        <EcosystemSection />
-        <CTA />
+
+      <main className="snap-y snap-mandatory h-screen overflow-y-scroll scroll-smooth">
+        <section className="snap-start ppt-slide relative">
+          <Hero />
+        </section>
+
+        <section className="snap-start">
+          <Marquee />
+        </section>
+
+        <section className="snap-start ppt-slide">
+          <CodeGeneration />
+        </section>
+
+        <section className="snap-start ppt-slide">
+          <DesignInnovation />
+        </section>
+
+        <section className="snap-start ppt-slide">
+          <FullStackDev />
+        </section>
+
+        <section className="snap-start ppt-slide">
+          <Collaboration />
+        </section>
+
+        <section className="snap-start ppt-slide">
+          <Stats />
+        </section>
+
+        <section className="snap-start ppt-slide">
+          <CTA />
+          <Footer />
+        </section>
       </main>
-      <Footer />
     </div>
   );
 }

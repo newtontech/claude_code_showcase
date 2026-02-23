@@ -8,26 +8,31 @@ export default {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#D97757', // Anthropic-ish Terra Cotta
+          DEFAULT: '#D97757', // Terra Cotta
           light: '#F2A085',
           dark: '#B55A3B',
         },
         secondary: {
-          DEFAULT: '#8898AA', // Cool Grey
-          light: '#AAB8C8',
-          dark: '#667585',
+          DEFAULT: '#5E6A75', // Slate Grey
+          light: '#8898AA',
+          dark: '#3A4249',
         },
         accent: {
-          DEFAULT: '#D4B483', // Champagne
-          light: '#E6C99C',
-          dark: '#B89B6D',
+          DEFAULT: '#B89B6D', // Gold/Sand
+          light: '#D4B483',
+          dark: '#9C8259',
         },
         bg: {
-          DEFAULT: '#0D0D0F', // Deep Charcoal
-          lighter: '#1A1A1E',
-          darker: '#050506',
+          DEFAULT: '#FFFFFF', // White
+          lighter: '#F9FAFB',
+          darker: '#F5F5F7',
         },
-        surface: '#1E1E21',
+        surface: '#FFFFFF',
+        text: {
+          primary: '#1A1A1E',
+          secondary: '#5E6A75',
+          light: '#8898AA',
+        }
       },
       fontFamily: {
         display: ['Orbitron', 'sans-serif'],
