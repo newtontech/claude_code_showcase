@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+html { background: #ffffff; }
+body {
+  width: 720pt; height: 405pt; margin: 0; padding: 0;
+  background: #ffffff; font-family: Arial, sans-serif;
+  display: flex; flex-direction: column;
+  position: relative;
+}
+.header {
+  background: #8C061C; padding: 20pt 40pt;
+}
+.header h1 {
+  color: #ffffff; font-size: 28pt; margin: 0;
+}
+.content {
+  padding: 25pt 40pt; flex: 1;
+}
+h2 {
+  color: #1A202C; font-size: 20pt; margin: 0 0 20pt 0;
+}
+.flow {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 25pt;
+}
+.step {
+  text-align: center; width: 100pt;
+}
+.step-num {
+  width: 40pt; height: 40pt; background: #8C061C;
+  border-radius: 50%; margin: 0 auto 10pt;
+  display: flex; justify-content: center; align-items: center;
+}
+.step-num p {
+  color: #ffffff; font-size: 18pt; font-weight: bold; margin: 0;
+}
+.step h3 {
+  color: #1A202C; font-size: 14pt; margin: 0 0 5pt 0;
+}
+.step p {
+  color: #718096; font-size: 11pt; margin: 0;
+}
+.arrow {
+  color: #CBD5E0; font-size: 24pt;
+}
+.arrow p { margin: 0; }
+.tip {
+  background: #FED7D7; padding: 15pt 20pt; border-radius: 8pt;
+  border-left: 4pt solid #8C061C;
+}
+.tip p {
+  color: #8C061C; font-size: 14pt; margin: 0;
+}
+.pagenum {
+  position: absolute; bottom: 15pt; right: 25pt;
+}
+.pagenum p {
+  color: #8C061C; font-size: 11pt; margin: 0;
+}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>Git 工作流程</h1>
+</div>
+<div class="content">
+  <h2>典型的 Git 工作流程</h2>
+  <div class="flow">
+    <div class="step">
+      <div class="step-num"><p>1</p></div>
+      <h3>修改代码</h3>
+      <p>在工作区编辑文件</p>
+    </div>
+    <div class="arrow"><p>-></p></div>
+    <div class="step">
+      <div class="step-num"><p>2</p></div>
+      <h3>暂存更改</h3>
+      <p>git add 添加到暂存区</p>
+    </div>
+    <div class="arrow"><p>-></p></div>
+    <div class="step">
+      <div class="step-num"><p>3</p></div>
+      <h3>提交更改</h3>
+      <p>git commit 保存版本</p>
+    </div>
+    <div class="arrow"><p>-></p></div>
+    <div class="step">
+      <div class="step-num"><p>4</p></div>
+      <h3>推送远程</h3>
+      <p>git push 同步到服务器</p>
+    </div>
+  </div>
+  <div class="tip">
+    <p>提示：养成频繁提交的习惯，每次提交应该是原子性的、有意义的更改</p>
+  </div>
+</div>
+<div class="pagenum"><p>7 / 8</p></div>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+html { background: #ffffff; }
+body {
+  width: 720pt; height: 405pt; margin: 0; padding: 0;
+  background: #ffffff; font-family: Arial, sans-serif;
+  display: flex; flex-direction: column;
+  position: relative;
+}
+.header {
+  background: #8C061C; padding: 20pt 40pt;
+}
+.header h1 {
+  color: #ffffff; font-size: 28pt; margin: 0;
+}
+.content {
+  padding: 20pt 40pt; flex: 1;
+}
+h2 {
+  color: #1A202C; font-size: 20pt; margin: 0 0 15pt 0;
+}
+.commands {
+  display: flex; flex-direction: column; gap: 10pt;
+}
+.cmd-row {
+  display: flex; align-items: center; gap: 15pt;
+}
+.cmd {
+  background: #2D3748; color: #F56565; padding: 6pt 12pt;
+  border-radius: 6pt; font-family: Courier New, monospace;
+  font-size: 12pt; min-width: 200pt;
+}
+.cmd p { margin: 0; }
+.desc {
+  color: #4A5568; font-size: 13pt;
+}
+.desc p { margin: 0; }
+.pagenum {
+  position: absolute; bottom: 15pt; right: 25pt;
+}
+.pagenum p {
+  color: #8C061C; font-size: 11pt; margin: 0;
+}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>Git 日常操作</h1>
+</div>
+<div class="content">
+  <h2>最常用的 Git 命令</h2>
+  <div class="commands">
+    <div class="cmd-row">
+      <div class="cmd"><p>git status</p></div>
+      <div class="desc"><p>查看当前工作区和暂存区状态</p></div>
+    </div>
+    <div class="cmd-row">
+      <div class="cmd"><p>git add [文件]</p></div>
+      <div class="desc"><p>将文件添加到暂存区</p></div>
+    </div>
+    <div class="cmd-row">
+      <div class="cmd"><p>git commit -m "说明"</p></div>
+      <div class="desc"><p>提交暂存区的更改到仓库</p></div>
+    </div>
+    <div class="cmd-row">
+      <div class="cmd"><p>git log</p></div>
+      <div class="desc"><p>查看提交历史记录</p></div>
+    </div>
+    <div class="cmd-row">
+      <div class="cmd"><p>git diff</p></div>
+      <div class="desc"><p>查看未暂存的更改内容</p></div>
+    </div>
+  </div>
+</div>
+<div class="pagenum"><p>5 / 8</p></div>
+</body>
+</html>

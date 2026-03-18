@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+html { background: #ffffff; }
+body {
+  width: 720pt; height: 405pt; margin: 0; padding: 0;
+  background: #ffffff; font-family: Arial, sans-serif;
+  display: flex; flex-direction: column;
+  position: relative;
+}
+.header {
+  background: #8C061C; padding: 20pt 40pt;
+}
+.header h1 {
+  color: #ffffff; font-size: 28pt; margin: 0;
+}
+.content {
+  padding: 25pt 40pt; flex: 1; display: flex; gap: 30pt;
+}
+.left {
+  flex: 1;
+}
+.left h2 {
+  color: #1A202C; font-size: 20pt; margin: 0 0 15pt 0;
+}
+.left p {
+  color: #4A5568; font-size: 14pt; margin: 0 0 20pt 0;
+}
+.right {
+  flex: 1.2; display: flex; flex-direction: column; gap: 15pt;
+}
+.area {
+  padding: 15pt 20pt; border-radius: 8pt;
+}
+.area h3 {
+  font-size: 16pt; margin: 0 0 8pt 0;
+}
+.area p {
+  font-size: 13pt; margin: 0;
+}
+.working {
+  background: #EBF8FF; border: 2pt solid #3182CE;
+}
+.working h3 { color: #2B6CB0; }
+.working p { color: #2C5282; }
+.staging {
+  background: #FEFCBF; border: 2pt solid #D69E2E;
+}
+.staging h3 { color: #B7791F; }
+.staging p { color: #975A16; }
+.repo {
+  background: #C6F6D5; border: 2pt solid #38A169;
+}
+.repo h3 { color: #276749; }
+.repo p { color: #22543D; }
+.pagenum {
+  position: absolute; bottom: 15pt; right: 25pt;
+}
+.pagenum p {
+  color: #8C061C; font-size: 11pt; margin: 0;
+}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>Git 基本概念</h1>
+</div>
+<div class="content">
+  <div class="left">
+    <h2>三个工作区域</h2>
+    <p>Git 通过三个区域来管理代码的版本控制流程，理解这三个区域是使用 Git 的基础。</p>
+    <p>文件在这三个区域之间流转，最终被永久保存到仓库中。</p>
+  </div>
+  <div class="right">
+    <div class="area working">
+      <h3>工作区 (Working Directory)</h3>
+      <p>实际编辑文件的目录，你在这里修改代码</p>
+    </div>
+    <div class="area staging">
+      <h3>暂存区 (Staging Area)</h3>
+      <p>准备提交的更改，下一次提交的内容</p>
+    </div>
+    <div class="area repo">
+      <h3>仓库 (Repository)</h3>
+      <p>永久保存的版本历史，所有提交记录</p>
+    </div>
+  </div>
+</div>
+<div class="pagenum"><p>3 / 8</p></div>
+</body>
+</html>

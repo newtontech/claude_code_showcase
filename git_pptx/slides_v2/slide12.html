@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+html { background: #ffffff; }
+body {
+  width: 720pt; height: 405pt; margin: 0; padding: 0;
+  background: #ffffff; font-family: Arial, sans-serif;
+  display: flex; flex-direction: column;
+  position: relative;
+}
+.header {
+  background: #8C061C; padding: 20pt 40pt;
+}
+.header h1 {
+  color: #ffffff; font-size: 28pt; margin: 0;
+}
+.content {
+  padding: 18pt 40pt; flex: 1; display: flex; gap: 25pt;
+}
+.left {
+  flex: 1;
+}
+.left h2 {
+  color: #1A202C; font-size: 18pt; margin: 0 0 12pt 0;
+}
+.left p {
+  color: #4A5568; font-size: 12pt; margin: 0 0 12pt 0;
+}
+.steps {
+  display: flex; flex-direction: column; gap: 8pt;
+}
+.step {
+  background: #F7FAFC; padding: 8pt 12pt; border-radius: 5pt;
+  border-left: 3pt solid #8C061C;
+}
+.step h3 {
+  color: #8C061C; font-size: 12pt; margin: 0 0 3pt 0;
+}
+.step p {
+  color: #4A5568; font-size: 10pt; margin: 0;
+}
+.right {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+}
+.right img {
+  max-width: 100%; max-height: 240pt; border-radius: 8pt;
+}
+.pagenum {
+  position: absolute; bottom: 15pt; right: 25pt;
+}
+.pagenum p {
+  color: #8C061C; font-size: 11pt; margin: 0;
+}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>合并与冲突解决</h1>
+</div>
+<div class="content">
+  <div class="left">
+    <h2>处理合并冲突</h2>
+    <p>当两个分支修改同一文件的同一部分时，会产生冲突</p>
+    <div class="steps">
+      <div class="step">
+        <h3>1. 发现冲突</h3>
+        <p>Git 会在冲突文件中标记冲突区域</p>
+      </div>
+      <div class="step">
+        <h3>2. 手动解决</h3>
+        <p>编辑文件，选择保留的更改内容</p>
+      </div>
+      <div class="step">
+        <h3>3. 标记解决</h3>
+        <p>git add 将解决后的文件加入暂存区</p>
+      </div>
+      <div class="step">
+        <h3>4. 完成合并</h3>
+        <p>git commit 提交合并结果</p>
+      </div>
+    </div>
+  </div>
+  <div class="right">
+    <img src="../images/git_conflict.png">
+  </div>
+</div>
+<div class="pagenum"><p>12 / 15</p></div>
+</body>
+</html>

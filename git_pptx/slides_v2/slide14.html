@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+html { background: #ffffff; }
+body {
+  width: 720pt; height: 405pt; margin: 0; padding: 0;
+  background: #ffffff; font-family: Arial, sans-serif;
+  display: flex; flex-direction: column;
+  position: relative;
+}
+.header {
+  background: #8C061C; padding: 20pt 40pt;
+}
+.header h1 {
+  color: #ffffff; font-size: 28pt; margin: 0;
+}
+.content {
+  padding: 20pt 40pt; flex: 1; display: flex; gap: 25pt;
+}
+.left {
+  flex: 1;
+}
+.left h2 {
+  color: #1A202C; font-size: 18pt; margin: 0 0 12pt 0;
+}
+.left p {
+  color: #4A5568; font-size: 12pt; margin: 0 0 12pt 0;
+}
+.commands {
+  display: flex; flex-direction: column; gap: 8pt;
+}
+.cmd-row {
+  display: flex; align-items: center; gap: 12pt;
+}
+.cmd {
+  background: #2D3748; color: #F56565; padding: 5pt 10pt;
+  border-radius: 5pt; font-family: Courier New, monospace;
+  font-size: 11pt; min-width: 180pt;
+}
+.cmd p { margin: 0; }
+.desc {
+  color: #4A5568; font-size: 11pt;
+}
+.desc p { margin: 0; }
+.right {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+}
+.right img {
+  max-width: 100%; max-height: 240pt; border-radius: 8pt;
+}
+.pagenum {
+  position: absolute; bottom: 15pt; right: 25pt;
+}
+.pagenum p {
+  color: #8C061C; font-size: 11pt; margin: 0;
+}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>Git Stash</h1>
+</div>
+<div class="content">
+  <div class="left">
+    <h2>临时保存工作</h2>
+    <p>当需要切换分支但不想提交当前更改时，可以使用 stash 临时保存</p>
+    <div class="commands">
+      <div class="cmd-row">
+        <div class="cmd"><p>git stash</p></div>
+        <div class="desc"><p>保存当前工作进度</p></div>
+      </div>
+      <div class="cmd-row">
+        <div class="cmd"><p>git stash list</p></div>
+        <div class="desc"><p>查看所有保存的进度</p></div>
+      </div>
+      <div class="cmd-row">
+        <div class="cmd"><p>git stash pop</p></div>
+        <div class="desc"><p>恢复最近的进度并删除</p></div>
+      </div>
+      <div class="cmd-row">
+        <div class="cmd"><p>git stash apply</p></div>
+        <div class="desc"><p>恢复进度但保留记录</p></div>
+      </div>
+      <div class="cmd-row">
+        <div class="cmd"><p>git stash drop</p></div>
+        <div class="desc"><p>删除最近的进度记录</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="right">
+    <img src="../images/git_stash.png">
+  </div>
+</div>
+<div class="pagenum"><p>14 / 15</p></div>
+</body>
+</html>

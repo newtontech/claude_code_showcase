@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+html { background: #ffffff; }
+body {
+  width: 720pt; height: 405pt; margin: 0; padding: 0;
+  background: #ffffff; font-family: Arial, sans-serif;
+  display: flex; flex-direction: column;
+  position: relative;
+}
+.header {
+  background: #8C061C; padding: 20pt 40pt;
+}
+.header h1 {
+  color: #ffffff; font-size: 28pt; margin: 0;
+}
+.content {
+  padding: 20pt 40pt; flex: 1; display: flex; gap: 25pt;
+}
+.left {
+  flex: 1;
+}
+.left h2 {
+  color: #1A202C; font-size: 18pt; margin: 0 0 15pt 0;
+}
+.commands {
+  display: flex; flex-direction: column; gap: 8pt;
+}
+.cmd-row {
+  display: flex; align-items: center; gap: 12pt;
+}
+.cmd {
+  background: #2D3748; color: #F56565; padding: 5pt 10pt;
+  border-radius: 5pt; font-family: Courier New, monospace;
+  font-size: 11pt; min-width: 180pt;
+}
+.cmd p { margin: 0; }
+.desc {
+  color: #4A5568; font-size: 11pt;
+}
+.desc p { margin: 0; }
+.right {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+}
+.right img {
+  max-width: 100%; max-height: 250pt; border-radius: 8pt;
+}
+.pagenum {
+  position: absolute; bottom: 15pt; right: 25pt;
+}
+.pagenum p {
+  color: #8C061C; font-size: 11pt; margin: 0;
+}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>分支管理</h1>
+</div>
+<div class="content">
+  <div class="left">
+    <h2>分支操作命令</h2>
+    <div class="commands">
+      <div class="cmd-row">
+        <div class="cmd"><p>git branch</p></div>
+        <div class="desc"><p>列出所有本地分支</p></div>
+      </div>
+      <div class="cmd-row">
+        <div class="cmd"><p>git branch [名称]</p></div>
+        <div class="desc"><p>创建新分支</p></div>
+      </div>
+      <div class="cmd-row">
+        <div class="cmd"><p>git checkout [分支]</p></div>
+        <div class="desc"><p>切换到指定分支</p></div>
+      </div>
+      <div class="cmd-row">
+        <div class="cmd"><p>git checkout -b [名称]</p></div>
+        <div class="desc"><p>创建并切换分支</p></div>
+      </div>
+      <div class="cmd-row">
+        <div class="cmd"><p>git merge [分支]</p></div>
+        <div class="desc"><p>合并指定分支到当前分支</p></div>
+      </div>
+      <div class="cmd-row">
+        <div class="cmd"><p>git branch -d [名称]</p></div>
+        <div class="desc"><p>删除已合并的分支</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="right">
+    <img src="../images/git_branching.png">
+  </div>
+</div>
+<div class="pagenum"><p>10 / 15</p></div>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+html { background: #ffffff; }
+body {
+  width: 720pt; height: 405pt; margin: 0; padding: 0;
+  background: #ffffff; font-family: Arial, sans-serif;
+  display: flex; flex-direction: column;
+  position: relative;
+}
+.header {
+  background: #8C061C; padding: 20pt 40pt;
+}
+.header h1 {
+  color: #ffffff; font-size: 28pt; margin: 0;
+}
+.content {
+  padding: 20pt 40pt; flex: 1; display: flex; gap: 25pt;
+}
+.left {
+  flex: 1;
+}
+.left p {
+  color: #4A5568; font-size: 14pt; margin: 0 0 15pt 0; line-height: 1.5;
+}
+.features {
+  display: flex; flex-direction: column; gap: 8pt;
+}
+.feature-box {
+  background: #F7FAFC; padding: 10pt 12pt; border-radius: 6pt;
+  border-left: 3pt solid #8C061C;
+}
+.feature-box h3 {
+  color: #8C061C; font-size: 13pt; margin: 0 0 3pt 0;
+}
+.feature-box p {
+  color: #4A5568; font-size: 12pt; margin: 0;
+}
+.right {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+}
+.right img {
+  max-width: 100%; max-height: 250pt; border-radius: 8pt;
+}
+.pagenum {
+  position: absolute; bottom: 15pt; right: 25pt;
+}
+.pagenum p {
+  color: #8C061C; font-size: 11pt; margin: 0;
+}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>什么是 Git？</h1>
+</div>
+<div class="content">
+  <div class="left">
+    <p>Git 是一个分布式版本控制系统，由 Linus Torvalds 于 2005 年创建，用于跟踪文件的更改并协调多人协作开发。</p>
+    <div class="features">
+      <div class="feature-box">
+        <h3>分布式架构</h3>
+        <p>每个开发者都有完整的代码仓库副本</p>
+      </div>
+      <div class="feature-box">
+        <h3>高效快速</h3>
+        <p>本地操作速度快，支持大型项目</p>
+      </div>
+      <div class="feature-box">
+        <h3>分支强大</h3>
+        <p>轻量级分支，轻松并行开发</p>
+      </div>
+    </div>
+  </div>
+  <div class="right">
+    <img src="../images/git_collaboration.png">
+  </div>
+</div>
+<div class="pagenum"><p>4 / 15</p></div>
+</body>
+</html>

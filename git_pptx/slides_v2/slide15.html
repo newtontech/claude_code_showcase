@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+html { background: #ffffff; }
+body {
+  width: 720pt; height: 405pt; margin: 0; padding: 0;
+  background: #ffffff; font-family: Arial, sans-serif;
+  display: flex; flex-direction: column;
+  position: relative;
+}
+.header {
+  background: #8C061C; padding: 20pt 40pt;
+}
+.header h1 {
+  color: #ffffff; font-size: 28pt; margin: 0;
+}
+.content {
+  padding: 20pt 40pt; flex: 1; display: flex; gap: 25pt;
+}
+.left {
+  flex: 1;
+}
+.left h2 {
+  color: #1A202C; font-size: 18pt; margin: 0 0 15pt 0;
+}
+.resources {
+  display: flex; flex-direction: column; gap: 10pt;
+}
+.resource {
+  background: #F7FAFC; padding: 8pt 12pt; border-radius: 6pt;
+  border-left: 3pt solid #8C061C;
+}
+.resource h3 {
+  color: #8C061C; font-size: 12pt; margin: 0 0 3pt 0;
+}
+.resource p {
+  color: #4A5568; font-size: 11pt; margin: 0;
+}
+.right {
+  flex: 1;
+}
+.right h2 {
+  color: #1A202C; font-size: 18pt; margin: 0 0 15pt 0;
+}
+.tips {
+  display: flex; flex-direction: column; gap: 8pt;
+}
+.tip {
+  display: flex; align-items: flex-start; gap: 10pt;
+}
+.tip-icon {
+  width: 20pt; height: 20pt; background: #8C061C;
+  border-radius: 50%; display: flex; justify-content: center;
+  align-items: center; flex-shrink: 0;
+}
+.tip-icon p {
+  color: #ffffff; font-size: 12pt; margin: 0;
+}
+.tip-text p {
+  color: #4A5568; font-size: 11pt; margin: 0;
+}
+.pagenum {
+  position: absolute; bottom: 15pt; right: 25pt;
+}
+.pagenum p {
+  color: #8C061C; font-size: 11pt; margin: 0;
+}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>总结与学习资源</h1>
+</div>
+<div class="content">
+  <div class="left">
+    <h2>学习资源</h2>
+    <div class="resources">
+      <div class="resource">
+        <h3>官方文档</h3>
+        <p>git-scm.com/doc</p>
+      </div>
+      <div class="resource">
+        <h3>Pro Git 书籍</h3>
+        <p>免费在线电子书</p>
+      </div>
+      <div class="resource">
+        <h3>GitHub 指南</h3>
+        <p>docs.github.com</p>
+      </div>
+      <div class="resource">
+        <h3>交互式学习</h3>
+        <p>learngitbranching.js.org</p>
+      </div>
+    </div>
+  </div>
+  <div class="right">
+    <h2>最佳实践</h2>
+    <div class="tips">
+      <div class="tip">
+        <div class="tip-icon"><p>1</p></div>
+        <div class="tip-text"><p>频繁提交，每次提交只做一件事</p></div>
+      </div>
+      <div class="tip">
+        <div class="tip-icon"><p>2</p></div>
+        <div class="tip-text"><p>写清晰的提交信息，说明"为什么"</p></div>
+      </div>
+      <div class="tip">
+        <div class="tip-icon"><p>3</p></div>
+        <div class="tip-text"><p>使用分支进行功能开发</p></div>
+      </div>
+      <div class="tip">
+        <div class="tip-icon"><p>4</p></div>
+        <div class="tip-text"><p>推送前先拉取最新代码</p></div>
+      </div>
+      <div class="tip">
+        <div class="tip-icon"><p>5</p></div>
+        <div class="tip-text"><p>定期清理已合并的分支</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="pagenum"><p>15 / 15</p></div>
+</body>
+</html>

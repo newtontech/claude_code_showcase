@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+html { background: #ffffff; }
+body {
+  width: 720pt; height: 405pt; margin: 0; padding: 0;
+  background: #ffffff; font-family: Arial, sans-serif;
+  display: flex; flex-direction: column;
+  position: relative;
+}
+.header {
+  background: #8C061C; padding: 20pt 40pt;
+}
+.header h1 {
+  color: #ffffff; font-size: 28pt; margin: 0;
+}
+.content {
+  padding: 20pt 40pt; flex: 1; display: flex; gap: 25pt;
+}
+.left {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+}
+.left img {
+  max-width: 100%; max-height: 280pt; border-radius: 8pt;
+}
+.right {
+  flex: 1;
+}
+.right h2 {
+  color: #1A202C; font-size: 18pt; margin: 0 0 15pt 0;
+}
+.right p {
+  color: #4A5568; font-size: 13pt; margin: 0 0 15pt 0;
+}
+.areas {
+  display: flex; flex-direction: column; gap: 10pt;
+}
+.area {
+  padding: 10pt 12pt; border-radius: 6pt;
+}
+.area h3 {
+  font-size: 13pt; margin: 0 0 3pt 0;
+}
+.area p {
+  font-size: 11pt; margin: 0;
+}
+.working {
+  background: #EBF8FF; border: 2pt solid #3182CE;
+}
+.working h3 { color: #2B6CB0; }
+.staging {
+  background: #FEFCBF; border: 2pt solid #D69E2E;
+}
+.staging h3 { color: #B7791F; }
+.repo {
+  background: #C6F6D5; border: 2pt solid #38A169;
+}
+.repo h3 { color: #276749; }
+.pagenum {
+  position: absolute; bottom: 15pt; right: 25pt;
+}
+.pagenum p {
+  color: #8C061C; font-size: 11pt; margin: 0;
+}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>Git 基本概念</h1>
+</div>
+<div class="content">
+  <div class="left">
+    <img src="../images/git_workflow.png">
+  </div>
+  <div class="right">
+    <h2>三个工作区域</h2>
+    <p>理解这三个区域是使用 Git 的基础</p>
+    <div class="areas">
+      <div class="area working">
+        <h3>工作区 Working Directory</h3>
+        <p>实际编辑文件的目录</p>
+      </div>
+      <div class="area staging">
+        <h3>暂存区 Staging Area</h3>
+        <p>准备提交的更改</p>
+      </div>
+      <div class="area repo">
+        <h3>仓库 Repository</h3>
+        <p>永久保存的版本历史</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="pagenum"><p>5 / 15</p></div>
+</body>
+</html>

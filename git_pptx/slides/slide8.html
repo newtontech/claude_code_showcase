@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+html { background: #ffffff; }
+body {
+  width: 720pt; height: 405pt; margin: 0; padding: 0;
+  background: #ffffff; font-family: Arial, sans-serif;
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  position: relative;
+}
+h1 {
+  color: #1A202C; font-size: 36pt; margin: 0 0 30pt 0; text-align: center;
+}
+.summary {
+  display: flex; gap: 25pt; margin-bottom: 30pt;
+}
+.item {
+  text-align: center; width: 140pt;
+}
+.item-icon {
+  width: 50pt; height: 50pt; background: #8C061C;
+  border-radius: 8pt; margin: 0 auto 12pt;
+  display: flex; justify-content: center; align-items: center;
+}
+.item-icon p {
+  color: #ffffff; font-size: 24pt; margin: 0;
+}
+.item h3 {
+  color: #1A202C; font-size: 16pt; margin: 0 0 5pt 0;
+}
+.item p {
+  color: #718096; font-size: 12pt; margin: 0;
+}
+.footer {
+  text-align: center;
+}
+.footer p {
+  color: #4A5568; font-size: 16pt; margin: 0;
+}
+.pagenum {
+  position: absolute; bottom: 15pt; right: 25pt;
+}
+.pagenum p {
+  color: #8C061C; font-size: 11pt; margin: 0;
+}
+</style>
+</head>
+<body>
+<h1>总结</h1>
+<div class="summary">
+  <div class="item">
+    <div class="item-icon"><p>1</p></div>
+    <h3>理解概念</h3>
+    <p>工作区、暂存区、仓库</p>
+  </div>
+  <div class="item">
+    <div class="item-icon"><p>2</p></div>
+    <h3>掌握命令</h3>
+    <p>add、commit、push、pull</p>
+  </div>
+  <div class="item">
+    <div class="item-icon"><p>3</p></div>
+    <h3>善用分支</h3>
+    <p>并行开发、隔离变更</p>
+  </div>
+  <div class="item">
+    <div class="item-icon"><p>4</p></div>
+    <h3>勤于提交</h3>
+    <p>小步快跑、原子提交</p>
+  </div>
+</div>
+<div class="footer">
+  <p>现在开始使用 Git 管理你的代码吧！</p>
+</div>
+<div class="pagenum"><p>8 / 8</p></div>
+</body>
+</html>
